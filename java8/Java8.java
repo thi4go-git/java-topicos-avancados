@@ -11,8 +11,9 @@ public class Java8 {
 
     public static void main(String[] args) {
         Java8.exemploLambda();
-        Java8.implementarInterfaceFigura();
+        Java8.implementarMetodoAutomaticamenteInterfaceFigura();
         Java8.exemploLambdaComArgumento();
+        Java8.exemploMethodReference();
     }
 
 
@@ -31,9 +32,9 @@ public class Java8 {
     }
 
 
-    // Método que implementa a interface Figura usando expressão lambda ele dá um Override automático no método desenhar.
-    public static void implementarInterfaceFigura(){
-        // Implementação da interface Figura usando expressão lambda
+ 
+    public static void implementarMetodoAutomaticamenteInterfaceFigura(){
+        //implementar a interface Figura usando expressão lambda ele dá um @Override automático no método desenhar.
         Figura figura = () -> System.out.println("Desenhando uma figura.");
         figura.desenhar();
     }
@@ -60,6 +61,26 @@ public class Java8 {
         produtos.sort( (Produto p1, Produto p2) -> Double.compare(p1.getPreco(), p2.getPreco()) );
     }       
 
+
+    public static void exemploMethodReference(){
+        List<String> nomes = List.of("Ana", "Bruno", "Carlos");
+        // Forma com lambda:
+        nomes.forEach(nome -> System.out.println(nome));
+        // Forma com method reference:
+        nomes.forEach(System.out::println);
+
+
+        //Exemplo method reference com método estático
+        System.out.println("Imprimindo produtos usando method reference:");
+        List<Produto> produtos = Arrays.asList(
+            new Produto("Caneta", 2.5),
+            new Produto("Lápis", 1.5),
+            new Produto("Caderno", 15.0),
+            new Produto("Papel", 1.6)
+        );
+        produtos.forEach( Produto::imprimeProdutoStatic );
+        produtos.forEach( Produto::imprimeProdutoNotStatic );
+    }
     
 }
 
@@ -69,9 +90,16 @@ interface Figura{
     void desenhar();
 }
 
+interface Figura2D{
+    void desenhar2D(Double largura, Double altura);
+}
+
 class Produto{
     private String nome;
     private double preco;
+
+    public Produto(){
+    }
 
     public Produto(String nome, double preco){
         this.nome = nome;
@@ -84,5 +112,13 @@ class Produto{
 
     public double getPreco(){
         return preco;
+    }
+
+    public static void imprimeProdutoStatic(Produto produto){
+        System.out.println("Imprimindo produto estático: "+produto.getNome());
+    }
+
+    public void imprimeProdutoNotStatic(){
+        System.out.println("Imprimindo produto: "+nome);
     }
 }
