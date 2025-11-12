@@ -10,11 +10,12 @@ import java.util.List;
 public class Java8 {
 
     public static void main(String[] args) {
-        // Java8.exemploLambda();
-        // Java8.implementarMetodoAutomaticamenteInterfaceFigura();
-        // Java8.exemploLambdaComArgumento();
-        // Java8.exemploMethodReference();
+        Java8.exemploLambda();
+        Java8.implementarMetodoAutomaticamenteInterfaceFigura();
+        Java8.exemploLambdaComArgumento();
+        Java8.exemploMethodReference();
         Java8.exemploBasicoStream();
+        Java8.exemploBase64CodificaDecodifica();
     }
 
 
@@ -104,6 +105,20 @@ public class Java8 {
                 .mapToDouble(Produto::getPreco) // mapeia para o preço
                 .reduce(0.0, (a, b) -> a + b); // reduz somando os preços
         System.out.println("Preço total dos produtos: R$" + precoTotal);
+    }
+
+    public static void exemploBase64CodificaDecodifica(){
+        String texto = "Texto para codificar em Base64";
+        System.out.println(texto);
+
+        // Codificar em Base64
+        String textoCodificado = java.util.Base64.getEncoder().encodeToString(texto.getBytes());
+        System.out.println(textoCodificado);
+
+        // Decodificar de Base64
+        byte[] bytesDecodificados = java.util.Base64.getDecoder().decode(textoCodificado);
+        String textoDecodificado = new String(bytesDecodificados);
+        System.out.println(textoDecodificado);
     }
 
     
