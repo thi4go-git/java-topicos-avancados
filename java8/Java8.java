@@ -1,9 +1,18 @@
 package java8;
 
+import java.io.FileReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.StringTokenizer;
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+
+
 
 /*      
  * Expressões lambda: Função anônima que não é alocada memória.
@@ -12,14 +21,16 @@ import java.util.StringTokenizer;
 public class Java8 {
 
     public static void main(String[] args) {
-        Java8.exemploLambda();
-        Java8.implementarMetodoAutomaticamenteInterfaceFigura();
-        Java8.exemploLambdaComArgumento();
-        Java8.exemploMethodReference();
-        Java8.exemploBasicoStream();
-        Java8.exemploBase64CodificaDecodifica();
-        Java8.exemploStringTokenizer();
-        Java8.exemploStringJoiner();
+        //Java8.exemploLambda();
+        //Java8.implementarMetodoAutomaticamenteInterfaceFigura();
+        //Java8.exemploLambdaComArgumento();
+        //Java8.exemploMethodReference();
+        //Java8.exemploBasicoStream();
+        //Java8.exemploBase64CodificaDecodifica();
+        //Java8.exemploStringTokenizer();
+        //Java8.exemploStringJoiner();
+        //Java8.exemploOptional();
+        //Java8.exemploRodarJavaScriptNashorn();
     }
 
 
@@ -148,6 +159,43 @@ public class Java8 {
         //Impressão: João, Pedro, Maria, Ana, Paulo
     }
     
+    //Otimiza o tratamento de valores que podem estar ausentes, evitando null checks e NullPointerExceptions.
+    public static void exemploOptional(){
+        //Exemplo de uso do Optional        
+        List<Produto> produtos = new ArrayList<>();
+        
+        Produto prod = new Produto();
+        prod.setNome("Produto com tipo");
+        prod.setpreco(5.0);
+        prod.setTipoProduto( new TipoProduto(1, "Eletrônico") );        
+        produtos.add(prod);
+
+        Produto prod2 = new Produto();
+        prod2.setNome("Produto sem tipo");
+        prod2.setpreco(5.0);
+        produtos.add(prod2);
+
+        //Usando Optional para evitar null pointer
+        produtos.forEach( produ -> {
+            String tipoDescricaoProduto = Optional.ofNullable(produ.getTipoProduto()) //Cria um Optional que pode ser nulo
+                    .map(tp -> tp.getDescricao()) //Se não for nulo, mapeia para a descrição
+                    .orElse(null); //Se for nulo, retorna null
+            System.out.println("Produto: " + produ.getNome() + ", Preço: R$ " + produ.getPreco() + ", Tipo: " + tipoDescricaoProduto);
+        });       
+    }
+
+    //Atenção: o Nashorn não existe mais a partir do Java 15.  Ocorre erro em versões mais recentes.
+    public static void exemploRodarJavaScriptNashorn(){
+        //Exemplo de uso do motor JavaScript Nashorn        
+        ScriptEngine scriptEngine = new ScriptEngineManager().getEngineByName("Nashorn");
+        Bindings bindings = scriptEngine.getBindings(ScriptContext.ENGINE_SCOPE);     
+        try {
+            scriptEngine.eval(new FileReader("script.js"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }        
+    }
+
 }
 
 
