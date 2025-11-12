@@ -10,10 +10,11 @@ import java.util.List;
 public class Java8 {
 
     public static void main(String[] args) {
-        Java8.exemploLambda();
-        Java8.implementarMetodoAutomaticamenteInterfaceFigura();
-        Java8.exemploLambdaComArgumento();
-        Java8.exemploMethodReference();
+        // Java8.exemploLambda();
+        // Java8.implementarMetodoAutomaticamenteInterfaceFigura();
+        // Java8.exemploLambdaComArgumento();
+        // Java8.exemploMethodReference();
+        Java8.exemploBasicoStream();
     }
 
 
@@ -81,44 +82,35 @@ public class Java8 {
         produtos.forEach( Produto::imprimeProdutoStatic );
         produtos.forEach( Produto::imprimeProdutoNotStatic );
     }
+
+    public static void exemploBasicoStream(){
+        List<Produto> produtos = Arrays.asList(
+            new Produto("Caneta", 2.5),
+            new Produto("Lápis", 1.5),
+            new Produto("Caderno", 15.0),
+            new Produto("Caderno Geladeira", 1500.0),
+            new Produto("Paper Geladeira", 1565.0),
+            new Produto("Caderno teste Geladeira", 1556.0),
+            new Produto("Papel", 1.6)
+        ); 
+        
+        produtos.stream()
+                .filter(p -> p.getNome().toLowerCase().contains("geladeira")) // Filtra produtos com "geladeira" no nome
+                .sorted( (p1, p2) -> Double.compare(p1.getPreco(), p2.getPreco()) ) //ordena pelo preço
+                .map(prod -> prod.getNome().toUpperCase() ) //mapeia para o nome em maiúsculo
+                .forEach(System.out::println); //imprime os nomes mapeados para maiúsculo
+    }
     
 }
 
 
-
+@FunctionalInterface // Interface funcional: só pode ter um método abstrato. Obriga a existência de apenas um método.
 interface Figura{
     void desenhar();
 }
 
+@FunctionalInterface 
 interface Figura2D{
     void desenhar2D(Double largura, Double altura);
 }
 
-class Produto{
-    private String nome;
-    private double preco;
-
-    public Produto(){
-    }
-
-    public Produto(String nome, double preco){
-        this.nome = nome;
-        this.preco = preco;
-    }
-
-    public String getNome(){
-        return nome;
-    }
-
-    public double getPreco(){
-        return preco;
-    }
-
-    public static void imprimeProdutoStatic(Produto produto){
-        System.out.println("Imprimindo produto estático: "+produto.getNome());
-    }
-
-    public void imprimeProdutoNotStatic(){
-        System.out.println("Imprimindo produto: "+nome);
-    }
-}
