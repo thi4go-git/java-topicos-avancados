@@ -2,6 +2,8 @@ package java8;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringJoiner;
+import java.util.StringTokenizer;
 
 /*      
  * Expressões lambda: Função anônima que não é alocada memória.
@@ -16,6 +18,8 @@ public class Java8 {
         Java8.exemploMethodReference();
         Java8.exemploBasicoStream();
         Java8.exemploBase64CodificaDecodifica();
+        Java8.exemploStringTokenizer();
+        Java8.exemploStringJoiner();
     }
 
 
@@ -121,6 +125,28 @@ public class Java8 {
         System.out.println(textoDecodificado);
     }
 
+    // String Tokenizer é uma classe que permite extrair tokens (substrings) de uma string com base em um delimitador especificado.
+    public static void exemploStringTokenizer(){
+        String nomes = "João, Pedro, Maria, Ana, Paulo";  
+        StringTokenizer tokenizer = new StringTokenizer(nomes, ",");
+        while (tokenizer.hasMoreTokens()) {
+            String nome = tokenizer.nextToken().trim();
+            System.out.println(nome);
+        }
+        //Impressão: João Pedro Maria Ana Paulo
+    }
+
+    //Adiciona strings com um delimitador especificado entre elas.
+    public static void exemploStringJoiner(){
+        StringJoiner strJoiner = new StringJoiner(", ");
+        strJoiner.add("João");
+        strJoiner.add("Pedro");
+        strJoiner.add("Maria");
+        strJoiner.add("Ana");
+        strJoiner.add("Paulo");
+        System.out.println(strJoiner);
+        //Impressão: João, Pedro, Maria, Ana, Paulo
+    }
     
 }
 
