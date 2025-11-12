@@ -99,7 +99,13 @@ public class Java8 {
                 .sorted( (p1, p2) -> Double.compare(p1.getPreco(), p2.getPreco()) ) //ordena pelo preço
                 .map(prod -> prod.getNome().toUpperCase() ) //mapeia para o nome em maiúsculo
                 .forEach(System.out::println); //imprime os nomes mapeados para maiúsculo
+
+        double precoTotal = produtos.stream()
+                .mapToDouble(Produto::getPreco) // mapeia para o preço
+                .reduce(0.0, (a, b) -> a + b); // reduz somando os preços
+        System.out.println("Preço total dos produtos: R$" + precoTotal);
     }
+
     
 }
 
